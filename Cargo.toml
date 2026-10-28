@@ -6,5 +6,6 @@ description = "Exact Egyptian fractions, bounded exhaustive search, and SVG comp
 repository = "https://github.com/andrii2g/egyptian-fraction-search"
 
 [dependencies]
+clap = { version = "4.6.7", features = ["derive"] }
 num-bigint = "0.5.1"
 num-traits = "0.2"
