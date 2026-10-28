@@ -1,0 +1,10 @@
+[package]
+name = "egyptian-fraction-search"
+version = "0.1.0"
+edition = "2024"
+description = "Exact Egyptian fractions, bounded exhaustive search, and SVG comparisons"
+repository = "https://github.com/andrii2g/egyptian-fraction-search"
+
+[dependencies]
+num-bigint = "0.5.1"
+num-traits = "0.2"
