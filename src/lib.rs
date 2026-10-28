@@ -5,6 +5,7 @@ pub mod greedy;
 pub mod metrics;
 pub mod rational;
 pub mod search;
+pub mod svg;
 pub mod verify;
 
 pub use decomposition::Decomposition;

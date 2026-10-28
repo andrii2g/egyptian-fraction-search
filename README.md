@@ -15,6 +15,7 @@ Use a Rust toolchain supporting edition 2024. All commands run locally.
 
 ```sh
 cargo run --release -- compare 2/7 --max-denominator 35 --max-terms 4
+cargo run --release -- compare 2/7 --max-denominator 35 --max-terms 4 --svg artifacts/comparison.svg
 cargo run --release -- greedy 4/17
 cargo run --release -- search 4/5 --max-denominator 10 --max-terms 3 --objective terms
 cargo run --release -- search 2/7 --max-denominator 35 --max-terms 4 --objective denominator
@@ -124,3 +125,30 @@ ties, inclusive bounds, budget boundaries, partial results, and CLI exit codes.
 
 Generated outputs belong in ignored `artifacts/`; Cargo output is ignored under
 `target/`.
+
+## SVG comparisons
+
+`compare --svg PATH` writes a standalone SVG and creates the parent directory if
+needed. Each full bar represents the input fraction, with segment widths
+proportional to the unit-fraction values. Exact labels remain visible below the
+bar even when a term is too small to distinguish visually. Duplicate greedy and
+search decompositions share one row.
+
+Diagrams include the search bounds and completion status. Partial greedy prefixes
+are omitted; if neither solver has a complete decomposition, no diagram is written
+and the CLI explains why. Only rendering coordinates use approximation; the
+decompositions and their verification stay exact.
+
+![Two decompositions of 2/7, trading fewer terms against smaller denominators](docs/example.svg)
+
+The checked-in examples can be regenerated with:
+
+```sh
+cargo run --release -- compare 2/7 --max-denominator 35 --max-terms 4 --svg docs/example.svg
+cargo run --release -- compare 4/17 --max-denominator 200 --max-terms 4 --svg docs/greedy-growth.svg
+```
+
+[The 4/17 comparison](docs/greedy-growth.svg) shows how greedy denominators can grow
+while short alternatives stay small. SVG tests cover invalid decompositions,
+escaped labels, large integers, proportional geometry, and incomplete-result
+status propagation through the CLI.

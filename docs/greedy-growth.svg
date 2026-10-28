@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="642" viewBox="0 0 1000 642" role="img" aria-labelledby="chart-title chart-desc">
+<title id="chart-title">Egyptian fraction comparison for 4/17</title>
+<desc id="chart-desc">Comparison of 2 exact decompositions of 4/17. Each aligned bar represents the entire target fraction. Segment widths are proportional; full unit labels, term counts, and largest denominators are shown. Search: optimal within bounds; objective: pareto; denominator &lt;= 200; terms &lt;= 4. Greedy: complete.</desc>
+<defs><style>text{font-family:Arial,Helvetica,sans-serif;fill:#24324a}.heading{font-size:26px;font-weight:700}.label{font-size:16px;font-weight:700}.muted{font-size:13px;fill:#63718a}.mono{font-family:Consolas,monospace;font-size:13px}.key{font-family:Consolas,monospace;font-size:12.5px}</style></defs>
+<rect width="1000" height="642" fill="#f3f5fa"/>
+<text class="heading" x="52" y="54">Egyptian fraction comparison</text>
+<text class="mono" x="52" y="84"><tspan x="52" dy="0">Target: 4/17</tspan></text>
+<text class="muted" x="52" y="110"><tspan x="52" dy="0">Search: optimal within bounds; objective: pareto; denominator &lt;= 200; terms &lt;= 4. Greedy: complete.</tspan></text>
+<text class="muted" x="52" y="138"><tspan x="52" dy="0">Each full bar represents the target fraction. Colored segments show the proportional shares of its distinct</tspan><tspan x="52" dy="18">unit fractions.</tspan></text>
+<rect class="panel" x="24" y="192" width="952" height="177" rx="14" fill="#ffffff" stroke="#dce2ee"/>
+<text class="label" x="52" y="222"><tspan x="52" dy="0">Greedy (exceeds search bounds)</tspan></text>
+<text class="mono" x="52" y="245"><tspan x="52" dy="0">Terms: 4    Largest denominator: 3039345</tspan></text>
+<defs><clipPath id="bar-0"><rect x="52" y="275" width="896" height="32" rx="7"/></clipPath></defs>
+<rect class="track" x="52" y="275" width="896" height="32" rx="7" fill="#e6eaf2"/>
+<g clip-path="url(#bar-0)">
+<rect class="segment" x="52.000000000" y="275" width="761.600000000" height="32" fill="#3266d6" data-denominator="5"><title>1/5</title></rect>
+<rect class="segment" x="813.600000000" y="275" width="131.310344827" height="32" fill="#18a08c" data-denominator="29"><title>1/29</title></rect>
+<rect class="segment" x="944.910344827" y="275" width="3.088402270" height="32" fill="#e8aa35" data-denominator="1233"><title>1/1233</title></rect>
+<rect class="segment" x="947.998747097" y="275" width="0.001252901" height="32" fill="#a36ac7" data-denominator="3039345"><title>1/3039345</title></rect>
+</g>
+<rect x="52" y="323" width="10" height="10" rx="2" fill="#3266d6"/>
+<text class="key" x="70" y="333"><tspan x="70" dy="0">1/5</tspan></text>
+<rect x="276" y="323" width="10" height="10" rx="2" fill="#18a08c"/>
+<text class="key" x="294" y="333"><tspan x="294" dy="0">1/29</tspan></text>
+<rect x="500" y="323" width="10" height="10" rx="2" fill="#e8aa35"/>
+<text class="key" x="518" y="333"><tspan x="518" dy="0">1/1233</tspan></text>
+<rect x="724" y="323" width="10" height="10" rx="2" fill="#a36ac7"/>
+<text class="key" x="742" y="333"><tspan x="742" dy="0">1/3039345</tspan></text>
+
+<rect class="panel" x="24" y="385" width="952" height="177" rx="14" fill="#ffffff" stroke="#dce2ee"/>
+<text class="label" x="52" y="415"><tspan x="52" dy="0">Search solution 1</tspan></text>
+<text class="mono" x="52" y="438"><tspan x="52" dy="0">Terms: 3    Largest denominator: 102</tspan></text>
+<defs><clipPath id="bar-1"><rect x="52" y="468" width="896" height="32" rx="7"/></clipPath></defs>
+<rect class="track" x="52" y="468" width="896" height="32" rx="7" fill="#e6eaf2"/>
+<g clip-path="url(#bar-1)">
+<rect class="segment" x="52.000000000" y="468" width="634.666666666" height="32" fill="#3266d6" data-denominator="6"><title>1/6</title></rect>
+<rect class="segment" x="686.666666666" y="468" width="224.000000000" height="32" fill="#18a08c" data-denominator="17"><title>1/17</title></rect>
+<rect class="segment" x="910.666666666" y="468" width="37.333333333" height="32" fill="#e8aa35" data-denominator="102"><title>1/102</title></rect>
+</g>
+<rect x="52" y="516" width="10" height="10" rx="2" fill="#3266d6"/>
+<text class="key" x="70" y="526"><tspan x="70" dy="0">1/6</tspan></text>
+<rect x="276" y="516" width="10" height="10" rx="2" fill="#18a08c"/>
+<text class="key" x="294" y="526"><tspan x="294" dy="0">1/17</tspan></text>
+<rect x="500" y="516" width="10" height="10" rx="2" fill="#e8aa35"/>
+<text class="key" x="518" y="526"><tspan x="518" dy="0">1/102</tspan></text>
+
+<text class="muted" x="52" y="582"><tspan x="52" dy="0">Verified with exact integer arithmetic. Very small segments may be invisible; every unit fraction is listed in</tspan><tspan x="52" dy="18">full below its bar.</tspan></text>
+</svg>

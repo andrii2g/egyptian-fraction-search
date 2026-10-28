@@ -1,4 +1,19 @@
 use std::process::{Command, Output};
+use std::{
+    path::PathBuf,
+    sync::atomic::{AtomicU64, Ordering},
+};
+
+fn svg_path() -> PathBuf {
+    static NEXT: AtomicU64 = AtomicU64::new(0);
+    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("artifacts/cli-tests")
+        .join(format!(
+            "{}-{}.svg",
+            std::process::id(),
+            NEXT.fetch_add(1, Ordering::Relaxed)
+        ))
+}
 
 fn run(arguments: &[&str]) -> Output {
     Command::new(env!("CARGO_BIN_EXE_egyptian-fraction-search"))
@@ -145,4 +160,64 @@ fn verify_command_checks_distinctness_and_exact_equality() {
         arguments.extend(denominators);
         assert_eq!(run(&arguments).status.code(), Some(2));
     }
+}
+
+#[test]
+fn comparison_writes_an_svg_with_exact_labels_and_bounded_status() {
+    let path = svg_path();
+    let output = run(&[
+        "compare",
+        "2/7",
+        "--max-denominator",
+        "35",
+        "--max-terms",
+        "4",
+        "--svg",
+        path.to_str().unwrap(),
+    ]);
+    assert!(
+        output.status.success(),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let svg = std::fs::read_to_string(&path).unwrap();
+    assert!(svg.contains("http://www.w3.org/2000/svg"));
+    assert!(svg.contains("optimal within bounds"));
+    assert!(svg.contains("1/28"));
+    assert!(svg.contains("1/21"));
+    assert!(stdout(&output).contains("SVG written:"));
+    std::fs::remove_file(path).unwrap();
+}
+
+#[test]
+fn incomplete_status_is_preserved_in_the_svg() {
+    let path = svg_path();
+    let output = run(&[
+        "compare",
+        "2/7",
+        "--max-nodes",
+        "0",
+        "--svg",
+        path.to_str().unwrap(),
+    ]);
+    assert_eq!(output.status.code(), Some(3));
+    let svg = std::fs::read_to_string(&path).unwrap();
+    assert!(svg.contains("budget exhausted; search incomplete"));
+    assert!(!svg.contains("optimal within bounds"));
+    std::fs::remove_file(path).unwrap();
+
+    let path = svg_path();
+    let output = run(&[
+        "compare",
+        "4/17",
+        "--max-nodes",
+        "0",
+        "--max-steps",
+        "1",
+        "--svg",
+        path.to_str().unwrap(),
+    ]);
+    assert_eq!(output.status.code(), Some(3));
+    assert!(stdout(&output).contains("SVG not written: no complete decomposition available"));
+    assert!(!path.exists());
 }

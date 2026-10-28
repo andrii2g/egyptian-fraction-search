@@ -1,6 +1,7 @@
-use std::error::Error;
+use std::{error::Error, path::PathBuf};
 
 use clap::{Args, Parser, Subcommand};
+use egyptian_fraction_search::svg::{SvgRow, render_comparison};
 use egyptian_fraction_search::{
     Decomposition, GreedyLimits, GreedyReport, GreedyStatus, Metrics, Objective, Rational,
     SearchConfig, SearchResult, SearchStatus, bounded_search, greedy, verify, verify_bounded,
@@ -95,6 +96,9 @@ struct CompareArgs {
     search: SearchArgs,
     #[command(flatten)]
     greedy: GreedyOptions,
+    /// Write an SVG diagram of the complete, exactly verified decompositions.
+    #[arg(long, value_name = "PATH")]
+    svg: Option<PathBuf>,
 }
 
 pub fn run() -> Result<u8, Box<dyn Error>> {
@@ -137,6 +141,7 @@ pub fn run() -> Result<u8, Box<dyn Error>> {
             }
             println!();
             print_search(&args.search, &result)?;
+            write_comparison_svg(&args, &report, &result)?;
             Ok(
                 if report.status != GreedyStatus::Complete
                     || result.status == SearchStatus::BudgetExhausted
@@ -193,14 +198,7 @@ fn print_search(args: &SearchArgs, result: &SearchResult) -> Result<(), Box<dyn 
         args.max_denominator, args.max_terms, args.max_nodes
     );
     println!("Objective: {}", args.objective);
-    println!(
-        "Search status: {}",
-        match result.status {
-            SearchStatus::Completed => "optimal within bounds",
-            SearchStatus::NoSolutionWithinBounds => "no solution within bounds",
-            SearchStatus::BudgetExhausted => "budget exhausted; search incomplete",
-        }
-    );
+    println!("Search status: {}", search_status_text(result.status));
     if result.solutions.is_empty() && result.status == SearchStatus::BudgetExhausted {
         println!("No complete decomposition found before the budget was exhausted");
     }
@@ -221,6 +219,86 @@ fn print_search(args: &SearchArgs, result: &SearchResult) -> Result<(), Box<dyn 
         println!("Verified: exact sum, increasing denominators, and search bounds");
     }
     print_metrics("Search", &result.metrics);
+    Ok(())
+}
+
+fn search_status_text(status: SearchStatus) -> &'static str {
+    match status {
+        SearchStatus::Completed => "optimal within bounds",
+        SearchStatus::NoSolutionWithinBounds => "no solution within bounds",
+        SearchStatus::BudgetExhausted => "budget exhausted; search incomplete",
+    }
+}
+
+fn write_comparison_svg(
+    args: &CompareArgs,
+    greedy_report: &GreedyReport,
+    search_result: &SearchResult,
+) -> Result<(), Box<dyn Error>> {
+    let Some(path) = &args.svg else { return Ok(()) };
+    let mut rows: Vec<SvgRow> = Vec::new();
+    if greedy_report.status == GreedyStatus::Complete {
+        let within = verify_bounded(
+            &args.search.fraction,
+            &greedy_report.decomposition,
+            args.search.max_denominator,
+            args.search.max_terms,
+        )
+        .is_ok();
+        rows.push(SvgRow {
+            label: if within {
+                "Greedy"
+            } else {
+                "Greedy (exceeds search bounds)"
+            }
+            .into(),
+            decomposition: greedy_report.decomposition.clone(),
+        });
+    }
+    for (index, solution) in search_result.solutions.iter().enumerate() {
+        let label = format!(
+            "Search {} {}",
+            if search_result.status == SearchStatus::BudgetExhausted {
+                "best found"
+            } else {
+                "solution"
+            },
+            index + 1
+        );
+        if let Some(row) = rows.iter_mut().find(|row| row.decomposition == *solution) {
+            row.label.push_str(&format!(" / {label}"));
+        } else {
+            rows.push(SvgRow {
+                label,
+                decomposition: solution.clone(),
+            });
+        }
+    }
+    if rows.is_empty() {
+        println!("SVG not written: no complete decomposition available");
+        return Ok(());
+    }
+    let greedy_status = match greedy_report.status {
+        GreedyStatus::Complete => "complete",
+        GreedyStatus::StepLimit => "incomplete (step limit); prefix omitted",
+        GreedyStatus::BitLimit => "incomplete (bit limit); prefix omitted",
+    };
+    let subtitle = format!(
+        "Search: {}; objective: {}; denominator <= {}; terms <= {}. Greedy: {greedy_status}.",
+        search_status_text(search_result.status),
+        args.search.objective,
+        args.search.max_denominator,
+        args.search.max_terms
+    );
+    let svg = render_comparison(&args.search.fraction, &rows, &subtitle)?;
+    if let Some(parent) = path
+        .parent()
+        .filter(|parent| !parent.as_os_str().is_empty())
+    {
+        std::fs::create_dir_all(parent)?;
+    }
+    std::fs::write(path, svg)?;
+    println!("SVG written: {}", path.display());
     Ok(())
 }
 

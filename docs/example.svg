@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="642" viewBox="0 0 1000 642" role="img" aria-labelledby="chart-title chart-desc">
+<title id="chart-title">Egyptian fraction comparison for 2/7</title>
+<desc id="chart-desc">Comparison of 2 exact decompositions of 2/7. Each aligned bar represents the entire target fraction. Segment widths are proportional; full unit labels, term counts, and largest denominators are shown. Search: optimal within bounds; objective: pareto; denominator &lt;= 35; terms &lt;= 4. Greedy: complete.</desc>
+<defs><style>text{font-family:Arial,Helvetica,sans-serif;fill:#24324a}.heading{font-size:26px;font-weight:700}.label{font-size:16px;font-weight:700}.muted{font-size:13px;fill:#63718a}.mono{font-family:Consolas,monospace;font-size:13px}.key{font-family:Consolas,monospace;font-size:12.5px}</style></defs>
+<rect width="1000" height="642" fill="#f3f5fa"/>
+<text class="heading" x="52" y="54">Egyptian fraction comparison</text>
+<text class="mono" x="52" y="84"><tspan x="52" dy="0">Target: 2/7</tspan></text>
+<text class="muted" x="52" y="110"><tspan x="52" dy="0">Search: optimal within bounds; objective: pareto; denominator &lt;= 35; terms &lt;= 4. Greedy: complete.</tspan></text>
+<text class="muted" x="52" y="138"><tspan x="52" dy="0">Each full bar represents the target fraction. Colored segments show the proportional shares of its distinct</tspan><tspan x="52" dy="18">unit fractions.</tspan></text>
+<rect class="panel" x="24" y="192" width="952" height="177" rx="14" fill="#ffffff" stroke="#dce2ee"/>
+<text class="label" x="52" y="222"><tspan x="52" dy="0">Greedy / Search solution 1</tspan></text>
+<text class="mono" x="52" y="245"><tspan x="52" dy="0">Terms: 2    Largest denominator: 28</tspan></text>
+<defs><clipPath id="bar-0"><rect x="52" y="275" width="896" height="32" rx="7"/></clipPath></defs>
+<rect class="track" x="52" y="275" width="896" height="32" rx="7" fill="#e6eaf2"/>
+<g clip-path="url(#bar-0)">
+<rect class="segment" x="52.000000000" y="275" width="784.000000000" height="32" fill="#3266d6" data-denominator="4"><title>1/4</title></rect>
+<rect class="segment" x="836.000000000" y="275" width="112.000000000" height="32" fill="#18a08c" data-denominator="28"><title>1/28</title></rect>
+</g>
+<rect x="52" y="323" width="10" height="10" rx="2" fill="#3266d6"/>
+<text class="key" x="70" y="333"><tspan x="70" dy="0">1/4</tspan></text>
+<rect x="276" y="323" width="10" height="10" rx="2" fill="#18a08c"/>
+<text class="key" x="294" y="333"><tspan x="294" dy="0">1/28</tspan></text>
+
+<rect class="panel" x="24" y="385" width="952" height="177" rx="14" fill="#ffffff" stroke="#dce2ee"/>
+<text class="label" x="52" y="415"><tspan x="52" dy="0">Search solution 2</tspan></text>
+<text class="mono" x="52" y="438"><tspan x="52" dy="0">Terms: 3    Largest denominator: 21</tspan></text>
+<defs><clipPath id="bar-1"><rect x="52" y="468" width="896" height="32" rx="7"/></clipPath></defs>
+<rect class="track" x="52" y="468" width="896" height="32" rx="7" fill="#e6eaf2"/>
+<g clip-path="url(#bar-1)">
+<rect class="segment" x="52.000000000" y="468" width="522.666666666" height="32" fill="#3266d6" data-denominator="6"><title>1/6</title></rect>
+<rect class="segment" x="574.666666666" y="468" width="224.000000000" height="32" fill="#18a08c" data-denominator="14"><title>1/14</title></rect>
+<rect class="segment" x="798.666666666" y="468" width="149.333333333" height="32" fill="#e8aa35" data-denominator="21"><title>1/21</title></rect>
+</g>
+<rect x="52" y="516" width="10" height="10" rx="2" fill="#3266d6"/>
+<text class="key" x="70" y="526"><tspan x="70" dy="0">1/6</tspan></text>
+<rect x="276" y="516" width="10" height="10" rx="2" fill="#18a08c"/>
+<text class="key" x="294" y="526"><tspan x="294" dy="0">1/14</tspan></text>
+<rect x="500" y="516" width="10" height="10" rx="2" fill="#e8aa35"/>
+<text class="key" x="518" y="526"><tspan x="518" dy="0">1/21</tspan></text>
+
+<text class="muted" x="52" y="582"><tspan x="52" dy="0">Verified with exact integer arithmetic. Very small segments may be invisible; every unit fraction is listed in</tspan><tspan x="52" dy="18">full below its bar.</tspan></text>
+</svg>
